@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Item, type: :model do
   before do
-    @item = FactoryBot.create(:item)
+    @item = FactoryBot.build(:item)
     #エラー（Mysql2::Error、環境系エラー)が発生するため、処理停止時間0.005秒を設ける
     sleep 0.005
   end
@@ -69,6 +69,11 @@ RSpec.describe Item, type: :model do
         @item.price = 10000000
         @item.valid?
         expect(@item.errors.full_messages).to include("Price must be less than or equal to 9999999")
+      end
+      it "priceに半角数字以外が含まれている場合は出品登録できない" do
+        @item.price = 'あ'
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Price is not a number")
       end
       it 'userが紐付いていないと保存できない' do
         @item.user = nil

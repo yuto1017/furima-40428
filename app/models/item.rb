@@ -28,7 +28,7 @@ class Item < ApplicationRecord
   validates :prefecture_id, numericality: { other_than: 1 }
   validates :shipping_date_id, numericality: { other_than: 1 }
 
-    #価格は、¥300~¥9,999,999の間のみ保存できるようにする
-  validates :price, numericality: { greater_than_or_equal_to: 300, less_than_or_equal_to: 9_999_999 }
+    #価格は、¥300~¥9,999,999の間と整数の時のみ保存できるようにする
+  validates :price, numericality: { greater_than_or_equal_to: 300, less_than_or_equal_to: 9_999_999, only_integer: true }
 
 end

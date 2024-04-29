@@ -1,10 +1,11 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!, except: [:index]
 
-  #商品一覧表示機能で実装するため、コメントアウト
-  #def index
+  
+  def index
+    #商品一覧表示機能で実装するため、コメントアウト
     #@items = Item.order("created_at DESC")
-  #end
+  end
 
   def new
     @item = Item.new

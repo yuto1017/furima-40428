@@ -3,8 +3,7 @@ class ItemsController < ApplicationController
 
   
   def index
-    #商品一覧表示機能で実装するため、コメントアウト
-    #@items = Item.order("created_at DESC")
+    @items = Item.all.order("created_at DESC")
   end
 
   def new

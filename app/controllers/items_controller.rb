@@ -23,6 +23,28 @@ class ItemsController < ApplicationController
     @item = Item.find(params[:id])
   end
 
+  def edit
+    @item = Item.find(params[:id])
+    #ログインしているユーザーが出品した商品で且つ、商品が売れている場合はトップページを表示する
+    #下記の条件分岐は商品購入機能実装後に31行の条件分岐と差し替えするため、コメントアウト
+    #if user_signed_in? && current_user.id == @item.user_id && @item.order == nil
+    if user_signed_in? && current_user.id != @item.user_id
+      redirect_to root_path
+    #ログインしているユーザーが出品した商品でない場合、商品の販売状況に関係なくトップページを表示する
+    #下記の条件分岐は商品購入機能実装後に追加するため、コメントアウト
+    #elsif user_signed_in? && current_user.id != @item.user_id
+      #redirect_to root_path
+    end
+  end
+
+  def update
+    @item = Item.find(params[:id])
+    if @item.update(item_params)
+      redirect_to item_path(@item.id)
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
 
   private
 

@@ -1,6 +1,6 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
-  before_action :set_item, only: [:show, :edit, :update]
+  before_action :set_item, only: [:show, :edit, :update, :destroy]
 
   def index
     @items = Item.all.order("created_at DESC")
@@ -25,7 +25,7 @@ class ItemsController < ApplicationController
 
   def edit
     #ログインしているユーザーが出品した商品で且つ、商品が売れている場合はトップページを表示する
-    #下記の条件分岐は商品購入機能実装後に31行の条件分岐と差し替えするため、コメントアウト
+    #下記の条件分岐は商品購入機能実装後に30行の条件分岐と差し替えするため、コメントアウト
     #if user_signed_in? && current_user.id == @item.user_id && @item.order == nil
     if user_signed_in? && current_user.id != @item.user_id
       redirect_to root_path
@@ -42,6 +42,13 @@ class ItemsController < ApplicationController
     else
       render :edit, status: :unprocessable_entity
     end
+  end
+
+  def destroy
+    if user_signed_in? && current_user.id == @item.user_id
+      @item.destroy
+    end
+    redirect_to root_path
   end
 
   private

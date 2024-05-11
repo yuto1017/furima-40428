@@ -23,7 +23,7 @@ class OrdersController < ApplicationController
       @order_delivery.save
       redirect_to root_path
     else
-      gon.public_key = ENV["PAYJP_PUBLIC_KEY"] # renderメソッドに対応したアクションを追加
+      gon.public_key = ENV["PAYJP_PUBLIC_KEY"] # renderメソッドに対応するため、アクションを追加
       render :index, status: :unprocessable_entity
     end
   end

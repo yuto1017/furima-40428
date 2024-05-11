@@ -90,3 +90,7 @@ gem 'image_processing', '~> 1.2'
 gem 'pry-byebug'
 
 gem 'active_hash'
+
+gem 'payjp'
+
+gem 'gon'

@@ -10,12 +10,11 @@
       <%= image_tag @item.image, class:"item-box-img" %>
 
       <%# 商品が売れていればsold outを表示する %>
-      <%# sold outの表示の条件分岐は商品購入機能実装後に実装するため、コメントアウト %>
-      <%#<% if @item.order != nil %>
+      <% if @item.order != nil %>
       <div class="sold-out">
         <span>Sold Out!!</span>
       </div>
-      <%#<% end %>
+      <% end %>
 
     </div>
     <div class="item-price-box">
@@ -27,17 +26,15 @@
       </span>
     </div>
 
-    <%# ログインしているユーザーと出品しているユーザーが同一人物の場合のみ表示する %>
-    <% if user_signed_in? && current_user.id == @item.user_id %>
+    <%# ログインしているユーザーと出品しているユーザーが同一人物で且つ、商品が売れていない場合は表示する %>
+    <% if user_signed_in? && current_user.id == @item.user_id && @item.order == nil %>
     <%= link_to "商品の編集", edit_item_path(@item.id), method: :get, class: "item-red-btn" %>
     <p class="or-text">or</p>
     <%= link_to "削除", item_path{@item.id}, data: {turbo_method: :delete}, class:"item-destroy" %>
 
     <%# ログインしているユーザーが出品していない且つ、商品が売れていない場合は表示する %>
-    <%# 下記の条件分岐は商品購入機能実装後に39行の条件分岐と差し替えするため、コメントアウト %>
-    <%#<% elsif user_signed_in? && current_user.id != @item.user_id && @item.order == nil %>
-    <% elsif user_signed_in? && current_user.id != @item.user_id %>
-    <%= link_to "購入画面に進む", "#" ,class:"item-red-btn"%>
+    <% elsif user_signed_in? && current_user.id != @item.user_id && @item.order == nil %>
+    <%= link_to "購入画面に進む",  item_orders_path(@item.id), data: { turbo: false }, class:"item-red-btn" %>
     <% end %>
 
     <div class="item-explain-box">

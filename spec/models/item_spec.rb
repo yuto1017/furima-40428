@@ -3,8 +3,6 @@ require 'rails_helper'
 RSpec.describe Item, type: :model do
   before do
     @item = FactoryBot.build(:item)
-    #エラー（Mysql2::Error、環境系エラー)が発生するため、処理停止時間0.005秒を設ける
-    sleep 0.005
   end
 
   describe '出品登録' do
